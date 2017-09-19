@@ -7,6 +7,8 @@
 
 #include "DualInterfaceDll_i.h"
 
+#include <vector>
+
 
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
@@ -51,7 +53,22 @@ END_COM_MAP()
 
 public:
 
+    virtual HRESULT STDMETHODCALLTYPE Add( 
+        int item);
+    
+    virtual HRESULT STDMETHODCALLTYPE Remove( 
+        int item);
+    
+    virtual HRESULT STDMETHODCALLTYPE GetCount( 
+        /* [retval][out] */ unsigned int *pcCount);
+    
+    virtual HRESULT STDMETHODCALLTYPE GetAt( 
+        unsigned int cPos,
+        /* [retval][out] */ int *pItem);
 
+protected:
+
+    std::vector < int > m_BackingCollection;
 
 };
 
