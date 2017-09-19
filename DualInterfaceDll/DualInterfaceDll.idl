@@ -1,0 +1,38 @@
+// DualInterfaceDll.idl : IDL source for DualInterfaceDll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DualInterfaceDll.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(C186BE35-9C10-4631-A636-16D4BEDEA3FC),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface ICustomList : IDispatch{
+    HRESULT Add(int item);
+    HRESULT Remove(int item);
+    HRESULT GetCount([out, retval] unsigned * pcCount);
+    HRESULT GetAt(unsigned cPos, [out, retval] int * pItem);
+};
+[
+	uuid(85AC615B-6687-46A8-A2DA-D7C2DA6F7B80),
+	version(1.0),
+]
+library DualInterfaceDllLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(AF113453-FE65-492D-82DD-E978E16EB50D)		
+	]
+	coclass CustomList
+	{
+		[default] interface ICustomList;
+	};
+};
+

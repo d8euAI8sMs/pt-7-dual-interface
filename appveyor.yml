@@ -1,0 +1,17 @@
+version: '{build}'
+
+image:
+  - Visual Studio 2013
+
+configuration:
+  - Release
+
+install:
+  - git submodule update --init --recursive
+
+build:
+  project: DualInterface.sln
+
+artifacts:
+  - path: '%CONFIGURATION%\DualInterface.exe'
+  - path: '%CONFIGURATION%\DualInterfaceDll.dll'
