@@ -21,7 +21,10 @@ interface ICustomList : IDispatch{
     HRESULT Count([out, retval] unsigned * pcCount);
     [propget]
     HRESULT Sum([out, retval] int * pcSum);
-    HRESULT GetAt(unsigned cPos, [out, retval] int * pItem);
+    [propget]
+    HRESULT At(unsigned cPos, [out, retval] int * pItem);
+    [propput]
+    HRESULT At(unsigned cPos, [in] int item);
 };
 [
 	uuid(85AC615B-6687-46A8-A2DA-D7C2DA6F7B80),

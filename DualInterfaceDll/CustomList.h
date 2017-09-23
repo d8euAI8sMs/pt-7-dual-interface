@@ -64,10 +64,14 @@ public:
     
     virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Sum( 
         /* [retval][out] */ int *pcSum);
-    
-    virtual HRESULT STDMETHODCALLTYPE GetAt( 
+        
+    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_At( 
         unsigned int cPos,
         /* [retval][out] */ int *pItem);
+    
+    virtual /* [propputref] */ HRESULT STDMETHODCALLTYPE put_At( 
+        unsigned int cPos,
+        int pItem);
 
 protected:
 

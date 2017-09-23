@@ -23,11 +23,17 @@ int _tmain(int argc, _TCHAR* argv[])
     list->Add(26);
     list->Add(27);
 
-    std::cout << "The sum is " << list->GetSum() << std::endl;
+    std::cout << "The sum is " << list->Sum << std::endl;
+
+    std::cout << "Set 0-th item" << std::endl;
+
+    list->PutAt(0, 28);
+
+    std::cout << "The sum is " << list->Sum << std::endl;
 
     std::cout << "Iterate" << std::endl;
 
-    unsigned size = list->GetCount();
+    unsigned size = list->Count;
 
     std::cout << "The size is " << size << std::endl;
 
@@ -39,15 +45,15 @@ int _tmain(int argc, _TCHAR* argv[])
 
     std::cout << "Remove 3 items" << std::endl;
 
-    list->Remove(25);
+    list->Remove(28);
     list->Remove(26);
     list->Remove(27);
 
-    size = list->GetCount();
+    size = list->Count;
 
     std::cout << "The size is " << size << std::endl;
 
-    std::cout << "The sum is " << list->GetSum() << std::endl;
+    std::cout << "The sum is " << list->Sum << std::endl;
 
     std::cout << std::endl << std::endl << std::endl;
     std::cout << "The same using Invoke" << std::endl;
@@ -80,6 +86,27 @@ int _tmain(int argc, _TCHAR* argv[])
 
     std::cout << "The sum is " << args[0].uintVal << std::endl;
 
+    std::cout << "Set 0-th item" << std::endl;
+    
+    name = L"At";
+    rc = list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+
+    args[0].vt = VT_INT;
+    args[0].intVal = 28;
+    args[1].vt = VT_UINT;
+    args[1].intVal = 0;
+    DISPID propput = DISPID_PROPERTYPUT;
+    dispParams = { args, &propput, 2, 1 };
+    rc = list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYPUT, &dispParams, NULL, NULL, NULL);
+
+    name = L"Sum";
+    rc = list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+
+    dispParams = { NULL, NULL, 0, 0 };
+    rc = list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &dispParams, &args[0], NULL, NULL);
+
+    std::cout << "The sum is " << args[0].uintVal << std::endl;
+
     std::cout << "Iterate" << std::endl;
 
     name = L"Count";
@@ -95,13 +122,13 @@ int _tmain(int argc, _TCHAR* argv[])
     {
         int item;
 
-        name = L"GetAt";
+        name = L"At";
         HRESULT rc = list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
 
         args[0].vt = VT_UINT;
         args[0].uintVal = i;
         dispParams = { args, NULL, 1, 0 };
-        list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &dispParams, &args[1], NULL, NULL);
+        list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &dispParams, &args[1], NULL, NULL);
         item = args[1].intVal;
 
         std::cout << "\tItem at position " << i << " is " << item << std::endl;
@@ -113,7 +140,7 @@ int _tmain(int argc, _TCHAR* argv[])
     list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
 
     args[0].vt = VT_INT;
-    args[0].intVal = 25;
+    args[0].intVal = 28;
     dispParams = { args, NULL, 1, 0 };
     list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &dispParams, NULL, NULL, NULL);
     args[0].intVal = 26;

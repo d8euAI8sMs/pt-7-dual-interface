@@ -45,12 +45,23 @@ HRESULT /* [propget] */ STDMETHODCALLTYPE CCustomList::get_Sum(
     return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CCustomList::GetAt( 
+HRESULT /* [propget] */ STDMETHODCALLTYPE CCustomList::get_At( 
     unsigned int cPos,
     /* [retval][out] */ int *pItem)
 {
     if (!pItem) return E_POINTER;
     if (cPos >= m_BackingCollection.size()) return E_INVALIDARG;
     *pItem = m_BackingCollection[cPos];
+    return S_OK;
+}
+
+HRESULT /* [propput] */ STDMETHODCALLTYPE CCustomList::put_At( 
+    unsigned int cPos,
+    int item)
+{
+    if (cPos >= m_BackingCollection.size()) return E_INVALIDARG;
+    m_cSum -= m_BackingCollection[cPos];
+    m_BackingCollection[cPos] = item;
+    m_cSum += item;
     return S_OK;
 }
