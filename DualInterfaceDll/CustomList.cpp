@@ -10,6 +10,7 @@ HRESULT STDMETHODCALLTYPE CCustomList::Add(
     int item)
 {
     m_BackingCollection.push_back(item);
+    m_cSum += item;
     return S_OK;
 }
 
@@ -20,6 +21,7 @@ HRESULT STDMETHODCALLTYPE CCustomList::Remove(
     {
         if (m_BackingCollection[i] == item)
         {
+            m_cSum -= m_BackingCollection[i];
             m_BackingCollection.erase(m_BackingCollection.begin() + i);
             break;
         }
@@ -27,11 +29,19 @@ HRESULT STDMETHODCALLTYPE CCustomList::Remove(
     return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CCustomList::GetCount( 
+HRESULT /* [propget] */ STDMETHODCALLTYPE CCustomList::get_Count( 
     /* [retval][out] */ unsigned int *pcCount)
 {
     if (!pcCount) return E_POINTER;
     *pcCount = m_BackingCollection.size();
+    return S_OK;
+}
+
+HRESULT /* [propget] */ STDMETHODCALLTYPE CCustomList::get_Sum( 
+    /* [retval][out] */ int *pcSum)
+{
+    if (!pcSum) return E_POINTER;
+    *pcSum = m_cSum;
     return S_OK;
 }
 

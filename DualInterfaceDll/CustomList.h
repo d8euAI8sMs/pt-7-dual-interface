@@ -58,9 +58,12 @@ public:
     
     virtual HRESULT STDMETHODCALLTYPE Remove( 
         int item);
-    
-    virtual HRESULT STDMETHODCALLTYPE GetCount( 
+        
+    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Count( 
         /* [retval][out] */ unsigned int *pcCount);
+    
+    virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Sum( 
+        /* [retval][out] */ int *pcSum);
     
     virtual HRESULT STDMETHODCALLTYPE GetAt( 
         unsigned int cPos,
@@ -69,6 +72,7 @@ public:
 protected:
 
     std::vector < int > m_BackingCollection;
+    int m_cSum;
 
 };
 

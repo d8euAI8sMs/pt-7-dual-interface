@@ -23,6 +23,8 @@ int _tmain(int argc, _TCHAR* argv[])
     list->Add(26);
     list->Add(27);
 
+    std::cout << "The sum is " << list->GetSum() << std::endl;
+
     std::cout << "Iterate" << std::endl;
 
     unsigned size = list->GetCount();
@@ -44,6 +46,8 @@ int _tmain(int argc, _TCHAR* argv[])
     size = list->GetCount();
 
     std::cout << "The size is " << size << std::endl;
+
+    std::cout << "The sum is " << list->GetSum() << std::endl;
 
     std::cout << std::endl << std::endl << std::endl;
     std::cout << "The same using Invoke" << std::endl;
@@ -68,13 +72,21 @@ int _tmain(int argc, _TCHAR* argv[])
     args[0].intVal = 27;
     list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &dispParams, NULL, NULL, NULL);
 
-    std::cout << "Iterate" << std::endl;
-
-    name = L"GetCount";
+    name = L"Sum";
     HRESULT rc = list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
 
     dispParams = { NULL, NULL, 0, 0 };
-    rc = list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &dispParams, &args[0], NULL, NULL);
+    rc = list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &dispParams, &args[0], NULL, NULL);
+
+    std::cout << "The sum is " << args[0].uintVal << std::endl;
+
+    std::cout << "Iterate" << std::endl;
+
+    name = L"Count";
+    rc = list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+
+    dispParams = { NULL, NULL, 0, 0 };
+    rc = list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &dispParams, &args[0], NULL, NULL);
     size = args[0].uintVal;
 
     std::cout << "The size is " << size << std::endl;
@@ -109,14 +121,22 @@ int _tmain(int argc, _TCHAR* argv[])
     args[0].intVal = 27;
     list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &dispParams, NULL, NULL, NULL);
 
-    name = L"GetCount";
+    name = L"Count";
     list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
 
     dispParams = { NULL, NULL, 0, 0 };
-    list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_METHOD, &dispParams, &args[0], NULL, NULL);
+    list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &dispParams, &args[0], NULL, NULL);
     size = args[0].uintVal;
 
     std::cout << "The size is " << size << std::endl;
+
+    name = L"Sum";
+    rc = list->GetIDsOfNames(IID_NULL, &name, 1, GetUserDefaultLCID(), &dispid);
+
+    dispParams = { NULL, NULL, 0, 0 };
+    rc = list->Invoke(dispid, IID_NULL, GetUserDefaultLCID(), DISPATCH_PROPERTYGET, &dispParams, &args[0], NULL, NULL);
+
+    std::cout << "The sum is " << args[0].uintVal << std::endl;
 
     system("pause");
 
