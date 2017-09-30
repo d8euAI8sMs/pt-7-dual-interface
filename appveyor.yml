@@ -12,6 +12,13 @@ install:
 build:
   project: DualInterface.sln
 
+after_build: >
+  7z a DualInterfaceNetClient.zip
+  "%APPVEYOR_BUILD_FOLDER%\DualInterfaceNetClient\bin\%CONFIGURATION%\*.dll"
+  "%APPVEYOR_BUILD_FOLDER%\DualInterfaceNetClient\bin\%CONFIGURATION%\*.exe"
+  "%APPVEYOR_BUILD_FOLDER%\DualInterfaceNetClient\bin\%CONFIGURATION%\*.config"
+
 artifacts:
   - path: '%CONFIGURATION%\DualInterface.exe'
   - path: '%CONFIGURATION%\DualInterfaceDll.dll'
+  - path: 'DualInterfaceNetClient.zip'
